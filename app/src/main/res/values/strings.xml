@@ -1,12 +1,10 @@
 <resources>
     <!---Menu0-->
-    <string name="app_name">EMVTST</string>
-    <string name="menu0_title">JCB L2 TEST</string>
-    <string name="menu0_item1">1.SALE</string>>
-    <string name="menu0_item2">2.Other Trans</string>
-    <string name="menu0_item3">3.Implementation option</string>>
-    <string name="menu0_item4">4.Auto Test</string>
-    <string name="menu0_item5">5.BCTC Param</string>
+    <string name="app_name">EMVTEST</string>
+    <string name="menu0_title">JCB\u3000L2\u3000TEST</string>
+    <string name="menu0_displine1">1.SALE\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u30002.Other Trans</string>>
+    <string name="menu0_displine2">3.Implementation option\u3000\u30004.Auto Test</string>>
+    <string name="menu0_displine3">5.BCTC\u3000Param</string>
     <!---Menu BCTC Download-->
     <string name="menuBCTC_DownloadAID">1.AID</string>
     <string name="menuBCTC_DownloadCAPK">2.CAPK</string>
