@@ -1,0 +1,22 @@
+<resources>
+    <!---Menu0-->
+    <string name="app_name">EMVTST</string>
+    <string name="menu0_title">JCB L2 TEST</string>
+    <string name="menu0_item1">1.SALE</string>>
+    <string name="menu0_item2">2.Other Trans</string>
+    <string name="menu0_item3">3.Implementation option</string>>
+    <string name="menu0_item4">4.Auto Test</string>
+    <string name="menu0_item5">5.BCTC Param</string>
+    <!---Menu BCTC Download-->
+    <string name="menuBCTC_DownloadAID">1.AID</string>
+    <string name="menuBCTC_DownloadCAPK">2.CAPK</string>
+    <string name="menuBCTC_DownloadTermParam">3.Term Param</string>
+    <string name="menuBCTC_DownloadBlackList">4.Exception File</string>
+    <string name="menuBCTC_DownloadRevokey">5.Revocation PK</string>
+    <!---Menu Auto Test-->
+    <string name="menuAutoTest_title1">Whether Enable Auto Test</string>
+    <string name="AutoTestSelectDisable">0.Disable</string>
+    <string name="AutoTestSelectEnable">1.Enable</string>
+    <string name="menuAutoTest_title2">AutoTest Interval</string>
+
+</resources>
