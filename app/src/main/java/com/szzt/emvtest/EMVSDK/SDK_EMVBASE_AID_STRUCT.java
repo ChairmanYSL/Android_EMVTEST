@@ -53,7 +53,7 @@ public class SDK_EMVBASE_AID_STRUCT extends Structure<SDK_EMVBASE_AID_STRUCT, SD
     public SDK_EMVBASE_AID_STRUCT() {
         super();
     }
-    protected List<? > getFieldOrder() {
+    protected List<String > getFieldOrder() {
         return Arrays.asList("AidLen", "Aid", "Asi", "AppVerNum", "TacDefault", "TacOnline", "TacDecline", "FloorLimit", "Threshold", "MaxTargetPercent", "TargetPercent", "TermDDOLLen", "TermDDOL", "TermPinCap", "ectranslimit", "cl_cvmlimit", "cl_translimit", "cl_offlinelimit", "transvaule", "contactorcontactless");
     }
     protected ByReference newByReference() { return new ByReference(); }

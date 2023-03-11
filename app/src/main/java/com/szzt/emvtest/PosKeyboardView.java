@@ -5,7 +5,7 @@ import android.inputmethodservice.KeyboardView;
 import android.inputmethodservice.KeyboardView.OnKeyboardActionListener;
 import android.os.Handler;
 import android.view.View;
-
+import android.util.Log;
 import com.szzt.emvtest.PosLcd;
 
 /**
@@ -60,7 +60,7 @@ public class PosKeyboardView extends View{
 		
 		public void onPress(int primaryCode) {
 			// TODO Auto-generated method stub
-//			Log.i("code", Integer.toString(primaryCode));
+			Log.i("lishiyao", "onPress get input:"+Integer.toString(primaryCode));
 			m_PosKb.KbStdin(primaryCode);
 		}
 		

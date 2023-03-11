@@ -54,7 +54,7 @@ public class PosLcd extends View {
 	private Drawable m_drawableDrawable;
 	private int m_margin;
 	private int m_fontType = CFONT;
-	private int m_fontSize = 30;
+	private int m_fontSize = 50;
 	private byte m_dispMode;		//正显还是反显 1-正显 0-反显
 	private Handler m_handler;
 	public ImageView imageView;
