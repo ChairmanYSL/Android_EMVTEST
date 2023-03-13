@@ -26,6 +26,7 @@ public class MainActivity extends Activity
     private  PosKeyboardView kb_view;
     private PosLcd p_lcd;
     private AlertDialog mAlertDialog;
+    private MainApplication mApplicattion;
 //    private EMVApp p_app;
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -33,6 +34,7 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d("lishiyao", "The onCreate() event");
+        mApplicattion=(MainApplication) getApplication();
 
         //获取屏幕显示信息
         DisplayMetrics dm = new DisplayMetrics();
@@ -46,16 +48,35 @@ public class MainActivity extends Activity
         kb_view = new PosKeyboardView(this.getBaseContext(), m_handler, (KeyboardView) findViewById(R.id.keyboard_view), R.layout.poskeyboard, p_lcd);
         EMVApp.getInstance().mainActivity = this;
         EMVApp.getInstance().setPosLcd(p_lcd);
+        Log.d("lishiyao", "onCreate setPosKeyboard: ");
         EMVApp.getInstance().setPosKeyboard(kb_view.m_PosKb);
-
+        EMVApp.getInstance().setMainApplication(mApplicattion);
     }
 
     @Override
     protected void onStart() {
+        Log.d("lishiyao", "onStart: ");
         super.onStart();
+
+        EMVApp.KeyCodeListener keylistener = new EMVApp.KeyCodeListener() {
+            @Override
+            public void sendKeyCode(int keyCode) {
+                EMVApp.getInstance().getPosKeyboard().keyValue = keyCode;
+            }
+        };
+
+        EMVApp.SerialDataListener commlistener = new EMVApp.SerialDataListener() {
+            @Override
+            public void SendSerialFlag(boolean flag) {
+                EMVApp.getInstance().receiveSerialFlag = flag;
+            }
+        };
+
         try {
-            EMVApp.getInstance().StartTransMenu();
+            EMVApp.getInstance().StartTransMenu(keylistener, commlistener);
         } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 //        EMVApp.getInstance().getPosKeyboard().Kb_GetKey();
