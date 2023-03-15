@@ -26,6 +26,7 @@ import com.szzt.sdk.device.pinpad.PinPad;
 import com.szzt.sdk.device.port.SerialPort;
 import com.szzt.sdk.device.printer.Printer;
 import com.szzt.sdk.system.HwSecurityManager;
+import com.szzt.sdk.system.HwSecurityManagerV2;
 import com.szzt.sdk.system.SystemManager;
 import com.szzt.sdk.system.net.NetManager;
 
@@ -198,6 +199,13 @@ public class MainApplication extends Application {
         getSystemManager();
         if (mSystemManager != null) {
             return mSystemManager.getHwSecurityManager();
+        } else return null;
+    }
+
+    public HwSecurityManagerV2 getHwSecurityManagerV2() {
+        getSystemManager();
+        if (mSystemManager != null) {
+            return mSystemManager.getHwSecurityManagerV2();
         } else return null;
     }
 

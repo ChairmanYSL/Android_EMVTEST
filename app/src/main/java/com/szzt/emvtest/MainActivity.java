@@ -15,11 +15,17 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.util.Log;
 
+import androidx.constraintlayout.solver.PriorityGoalRow;
+
+import com.szzt.emvtest.EMVSDK.SDK_RETURN_CODE;
 import com.szzt.emvtest.PosKeyboardView;
 import com.szzt.emvtest.EMVApp;
 import com.szzt.emvtest.PosLcd;
+import com.szzt.sdk.device.port.SerialPort;
+import com.szzt.emvtest.PosKeyboard;
 
 import java.io.UnsupportedEncodingException;
+import com.szzt.emvtest.TestLibrary;
 
 public class MainActivity extends Activity
 {
@@ -51,37 +57,88 @@ public class MainActivity extends Activity
         Log.d("lishiyao", "onCreate setPosKeyboard: ");
         EMVApp.getInstance().setPosKeyboard(kb_view.m_PosKb);
         EMVApp.getInstance().setMainApplication(mApplicattion);
+        EMVApp.getInstance().InitData();
     }
 
     @Override
     protected void onStart() {
         Log.d("lishiyao", "onStart: ");
         super.onStart();
-
-        EMVApp.KeyCodeListener keylistener = new EMVApp.KeyCodeListener() {
-            @Override
-            public void sendKeyCode(int keyCode) {
-                EMVApp.getInstance().getPosKeyboard().keyValue = keyCode;
-            }
-        };
-
-        EMVApp.SerialDataListener commlistener = new EMVApp.SerialDataListener() {
-            @Override
-            public void SendSerialFlag(boolean flag) {
-                EMVApp.getInstance().receiveSerialFlag = flag;
-            }
-        };
-
-        try {
-            EMVApp.getInstance().StartTransMenu(keylistener, commlistener);
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-//        EMVApp.getInstance().getPosKeyboard().Kb_GetKey();
-
+        AppSysmain.start();
+        AppSysmain.setPriority(10);
     }
+
+    @Override
+    protected void onStop() {
+        SerialPort port = mApplicattion.getSerialPortWrapperImpl();
+        port.close();
+        Log.d("lishiyao", "onStop: close Serial");
+        super.onStop();
+    }
+
+    Thread AppSysmain = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            int rslt;
+            int key, page = 0;
+            boolean bisBrushScrean = true;
+            Log.d("lishiyao", "run: before TestLibrary.INSTANCE.sdkemvbaseInitDDI");
+            TestLibrary.INSTANCE.sdkemvbaseInitDDI();
+            Log.d("lishiyao", "run: after TestLibrary.INSTANCE.sdkemvbaseInitDDI");
+            while(true)
+            {
+                switch(page)
+                {
+                    case 1:
+                            key = EMVApp.getInstance().Menu1();
+                        break;
+
+                    default:
+                            key = EMVApp.getInstance().Menu0();
+                        bisBrushScrean = false;
+                        break;
+                }
+
+                switch ( key )
+                {
+                    case PosKeyboard.KEYENTER:
+                    case PosKeyboard.KEYDOWN:
+                        bisBrushScrean = true;
+                        page++;
+
+                        if(page > 2)
+                        {
+                            page = 0;
+                        }
+                        break;
+
+                    case PosKeyboard.KEYUP:
+                        bisBrushScrean = true;
+                        page--;
+
+                        if(page < 0)
+                        {
+                            page = 2;
+                        }
+                        break;
+
+                    case PosKeyboard.KEYCANCEL:
+
+                        if(page != 0)
+                        {
+                            bisBrushScrean = true;
+                        }
+                        page = 0;
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+        }
+
+    });
 
     private  Handler m_handler = new Handler()
     {

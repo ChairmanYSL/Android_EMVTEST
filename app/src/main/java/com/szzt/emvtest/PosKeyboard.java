@@ -90,6 +90,65 @@ public class PosKeyboard extends Keyboard {
 		}
 	}
 
+	public int Kb_GetKey(int timeout)
+	{
+		int value;
+		PosTimer timer = new PosTimer(1000*timeout);
+		timer.timerStart();
+		while (!timer.checkTimerExpired()) {
+			if (Kb_Hit() == 1) {
+				break;
+			}
+
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		m_keyCode = keyList.get(0);
+		keyList.remove(0);
+		value = m_keyCode;
+		Log.d("lishiyao", "Kb_GetKey value = " + value);
+
+		if(value == 0x05){
+			Message msg = new Message();
+			msg.what = 2;
+			handler.sendMessage(msg);
+		}
+
+		switch (value){
+			case 0x01:
+				value = KEYUP;
+				break;
+			case 0x02:
+				value = KEYDOWN;
+				break;
+			case 0x03:
+				value = KEYMENU;
+				break;
+			case 0x43:
+				value = KEYCLEAR;
+				break;
+			case 0x3E:
+				value = KEYENTER;
+				break;
+			case 0x3F:
+				value = KEYCANCEL;
+				break;
+			case 0x40:
+				value = KEYBCKSPACE;
+				break;
+			case 0x15:
+				value = KEYFN;
+				break;
+			case 0x05:
+				value = KEYEXIT;
+		}
+		return value;
+	}
+
 	public int Kb_GetKey() {
 		// Integer keyValue;
 		int value;

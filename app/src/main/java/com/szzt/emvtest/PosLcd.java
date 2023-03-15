@@ -110,7 +110,7 @@ public class PosLcd extends View {
 		Lcd_DrawBox(0, m_curLine - m_fontSize, m_width, m_curLine + ((endLine - startLine + 1) * ((int) (this.m_paint.getTextSize() + linecap))) - m_fontSize);
 	}
 
-	public void Lcd_Printf(String dispText) throws UnsupportedEncodingException {
+	public void Lcd_Printf(String dispText){
 		if (m_dispMode == 0x01)
 			this.m_paint.setColor(Color.BLACK);
 		else
@@ -144,7 +144,7 @@ public class PosLcd extends View {
 		this.Lcd_Printf(dispText);
 	}
 
-	public void Lcd_PrintfXY(int line, int col, String dispText, int attr) throws UnsupportedEncodingException {
+	public void Lcd_PrintfXY(int line, int col, String dispText, int attr){
 		Rect rect = new Rect();
         int len = dispText.length();
 		this.m_paint.getTextBounds(dispText,0,len,rect);
